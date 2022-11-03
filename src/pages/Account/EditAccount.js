@@ -106,8 +106,8 @@ const EditAccount = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if(firstName && lastName && phone && gender && address &&city && zip && state && country){
-      if(phone.match(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/) && 
-      zip.match(/(^\d{6}$)|(^\d{6}-\d{6}$)/)){
+      if(phone.match(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/)
+       &&zip.match(/(^\d{6}$)|(^\d{6}-\d{6}$)/)){
     dispatch(UpdateUserProfile(userData)).then((data) => {
       if (data?.payload?.statusCode === 202) {
         toast.success(data?.payload?.message)
@@ -120,6 +120,50 @@ const EditAccount = () => {
   }
     }else{
       setfieldError("Please fill the mandatory filed")
+    }
+    if(phone.match(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/)){
+      setFormError(state => {
+        return{
+          ...state,
+          phoneError : ""
+        }
+      })
+    }else if (phone.length == 0){
+      setFormError(state => {
+        return{
+          ...state,
+          phoneError : ""
+        }
+      })
+    }else if (phone.length > 0){
+      setFormError(state => {
+        return{
+          ...state,
+          phoneError : "please check your phone"
+        }
+      })
+    }
+    if(zip.match(/(^\d{6}$)|(^\d{6}-\d{6}$)/)){
+      setFormError(state => {
+        return{
+          ...state,
+          zipError : ""
+        }
+      })
+    }else if (zip.length == 0){
+      setFormError(state => {
+        return{
+          ...state,
+          zipError : ""
+        }
+      })
+    }else if (zip.length > 0){
+      setFormError(state => {
+        return{
+          ...state,
+          zipError : "please check your zip code"
+        }
+      })
     }
   };
 
